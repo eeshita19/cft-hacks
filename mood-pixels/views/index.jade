@@ -1,0 +1,45 @@
+extends ./layout
+
+block content
+  .container
+    .column
+      .header
+          h1 Your Mood Calender
+    .column
+      #pixels
+  .container
+    .column
+      .grid#moodGrid
+        div.item
+          span
+          div.days
+            - each _, i in Array(31)
+              span.day= i+1
+        - each _, i in Array(grid[prop])
+          - for (var prop in grid)
+            div.item.month(data-month="#{prop}")
+              span= prop[0]
+              - each _, i in Array(grid[prop])
+                a(href="#", data-mood="0")
+    .column
+      .interface
+        .mood-form
+          h2 Hello there,<br />How are you feeling today?
+          form(id="submitMood", action="")
+            - for (var prop in moodOptions)
+              div
+                input(type="radio", class="mood-#{prop}" id="#{moodOptions[prop]}", name="dayMood", value="#{prop}")
+                label(for="#{moodOptions[prop]}")
+          #message
+            p 
+              | Your day has been
+              |  
+              u Amazing
+              | .
+        div#chart
+          div.ct-chart
+        div#quoteOfTheDay
+          p Loading...
+    
+  script(type='text/javascript').
+    var moodOptions = !{JSON.stringify(moodOptions)}
